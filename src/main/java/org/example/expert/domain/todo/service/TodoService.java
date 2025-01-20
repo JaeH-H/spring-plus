@@ -19,12 +19,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+/**
+ * @Transactional이 읽기 전용으로 되어 있어서 없애거나
+ * 메소드 위에 @Transactional(readOnly = false)로 수정해야함.
+ */
 @Transactional(readOnly = true)
 public class TodoService {
 
     private final TodoRepository todoRepository;
     private final WeatherClient weatherClient;
 
+    @Transactional(readOnly = false)
     public TodoSaveResponse saveTodo(AuthUser authUser, TodoSaveRequest todoSaveRequest) {
         User user = User.fromAuthUser(authUser);
 
